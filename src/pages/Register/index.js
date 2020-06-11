@@ -76,7 +76,6 @@ const Register = (props) => {
       style={styles.container}
       resizeMode="cover">
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
-      <Text style={styles.welcome}>Cadastro</Text>
       <Content>
         <Form>
           <Item floatingLabel>
