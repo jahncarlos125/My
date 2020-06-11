@@ -125,7 +125,7 @@ const Main = (props) => {
       resizeMode="cover">
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Image
             source={{
               uri: 'https://i.imgur.com/jzOafDp.png',
