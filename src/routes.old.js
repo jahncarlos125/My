@@ -8,7 +8,7 @@ const Routes = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="Main"
         component={Main}
         options={{headerShown: false}}
       />

@@ -10,9 +10,10 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import {Button, Text, Icon, CardItem, Body, ListItem} from 'native-base';
+import {Button, Text, Icon, CardItem, Body, ListItem, Left} from 'native-base';
+import LottieView from 'lottie-react-native';
 import {useSelector} from 'react-redux';
-import {TextInputMask} from 'react-native-masked-text';
+import {TextInputMask, TextMask} from 'react-native-masked-text';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,12 +60,23 @@ const styles = StyleSheet.create({
 const Item = (props) => {
   return (
     <View style={styles.card}>
-      <Text style={{color: 'blue', fontWeight: 'bold', padding: 10}}>
-        {props.name}
-      </Text>
+      <ListItem>
+        <Icon name="contact" style={{color: '#7159c1'}} />
+        <Body>
+          <Text
+            style={{
+              color: '#7159c1',
+              fontWeight: 'bold',
+              padding: 10,
+              textAlign: 'center',
+            }}>
+            {props.name}
+          </Text>
+        </Body>
+      </ListItem>
       <ListItem>
         <Text>CPF: </Text>
-        <TextInputMask
+        <TextMask
           style={{padding: 0}}
           type={'custom'}
           options={{
@@ -75,7 +87,7 @@ const Item = (props) => {
       </ListItem>
       <ListItem>
         <Text>RG: </Text>
-        <TextInputMask
+        <TextMask
           style={{padding: 0}}
           type={'custom'}
           options={{
@@ -86,7 +98,7 @@ const Item = (props) => {
       </ListItem>
       <ListItem>
         <Text>Titulo: </Text>
-        <TextInputMask
+        <TextMask
           style={{padding: 0}}
           type={'custom'}
           options={{
@@ -97,7 +109,7 @@ const Item = (props) => {
       </ListItem>
       <ListItem>
         <Text>CNH: </Text>
-        <TextInputMask
+        <TextMask
           style={{padding: 0}}
           type={'custom'}
           options={{
@@ -114,8 +126,74 @@ const Item = (props) => {
   );
 };
 
+const ItemAdress = (props) => {
+  return (
+    <View style={styles.card}>
+      <ListItem>
+        <Icon name="home" style={{color: '#7159c1'}} />
+        <Body>
+          <TextMask
+            style={{
+              color: '#7159c1',
+              fontWeight: 'bold',
+              padding: 10,
+              textAlign: 'center',
+            }}
+            type={'custom'}
+            options={{
+              mask: '99.999-999',
+            }}
+            value={props.cep}
+          />
+        </Body>
+      </ListItem>
+      <ListItem noIndent>
+        <Icon name="arrow-dropright" style={{color: '#7159c1'}} />
+        <Body>
+          <Text>{props.logradouro}</Text>
+        </Body>
+      </ListItem>
+      <ListItem noIndent>
+        <Icon name="arrow-dropright" style={{color: '#7159c1'}} />
+        <Body>
+          <Text>{props.num}</Text>
+        </Body>
+      </ListItem>
+      <ListItem noIndent>
+        <Icon name="arrow-dropright" style={{color: '#7159c1'}} />
+
+        <Body>
+          <Text>{props.bairro}</Text>
+        </Body>
+      </ListItem>
+      <ListItem noIndent>
+        <Icon name="arrow-dropright" style={{color: '#7159c1'}} />
+
+        <Body>
+          <Text>{props.complemento}</Text>
+        </Body>
+      </ListItem>
+      <ListItem noIndent>
+        <Icon name="arrow-dropright" style={{color: '#7159c1'}} />
+
+        <Body>
+          <Text>{props.cidade}</Text>
+        </Body>
+      </ListItem>
+      <ListItem noIndent>
+        <Icon name="arrow-dropright" style={{color: '#7159c1'}} />
+
+        <Body>
+          <Text>{props.uf}</Text>
+        </Body>
+      </ListItem>
+    </View>
+  );
+};
+
 const Main = (props) => {
   const {users} = useSelector((state) => state.users);
+  const {address} = useSelector((state) => state.address);
   return (
     <ImageBackground
       source={{
@@ -126,22 +204,13 @@ const Main = (props) => {
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
       <SafeAreaView>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Image
-            source={{
-              uri: 'https://i.imgur.com/jzOafDp.png',
-            }}
-            style={styles.logo}
-            resizeMode="contain"
+          <LottieView
+            source={require('../../assets/wallet.lottie.json')}
+            autoPlay
+            loop
+            style={{width: 120, alignSelf: 'center'}}
           />
           <Text style={styles.welcome}>Minha Carteira</Text>
-          <Button
-            full
-            rounded
-            dark
-            style={styles.button}
-            onPress={() => props.navigation.navigate('Register')}>
-            <Text style={{color: 'blue', fontWeight: 'bold'}}>Cadastrar</Text>
-          </Button>
           {users.map((item) => (
             <Item
               key={item.cpf}
@@ -151,6 +220,18 @@ const Main = (props) => {
               titulo={item.titulo}
               cnh={item.cnh}
               email={item.email}
+            />
+          ))}
+          {address.map((item) => (
+            <ItemAdress
+              key={item.id}
+              cep={item.cep}
+              complemento={item.complemento}
+              num={item.num}
+              bairro={item.bairro}
+              cidade={item.cidade}
+              logradouro={item.logradouro}
+              uf={item.uf}
             />
           ))}
         </ScrollView>

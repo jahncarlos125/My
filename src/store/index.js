@@ -17,7 +17,7 @@ const sagaMiddleware = createSagaMiddleware({sagaMonitor});
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['users'],
+  whitelist: ['users', 'address'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

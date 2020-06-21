@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   Text,
   StyleSheet,
@@ -44,13 +44,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const Register = (props) => {
+const Register = ({navigation}) => {
   const [name, setName] = useState(null);
   const [cpf, setCpf] = useState(null);
   const [rg, setRg] = useState(null);
   const [titulo, setTitulo] = useState(null);
   const [cnh, setCnh] = useState(null);
   const [email, setEmail] = useState(null);
+  const cpfInput = useRef(null);
   const dispatch = useDispatch();
 
   const save = () => {
@@ -65,7 +66,7 @@ const Register = (props) => {
         email,
       }),
     );
-    props.navigation.navigate('Main');
+    navigation.navigate('Main');
   };
 
   return (
@@ -84,7 +85,7 @@ const Register = (props) => {
               style={styles.instructions}
               returnKeyType="next"
               onChangeText={(text) => setName(text)}
-              onSubmitEditing={() => this.cpfInput.focus()}
+              onSubmitEditing={() => cpfInput.current.focus()}
             />
           </Item>
           <Item floatingLabel>
@@ -95,7 +96,7 @@ const Register = (props) => {
               returnKeyType="next"
               onChangeText={(text) => setCpf(text)}
               onSubmitEditing={() => this.rgInput.focus()}
-              ref={(input) => (this.cpfInput = input)}
+              ref={cpfInput}
             />
           </Item>
           <Item floatingLabel>
@@ -155,7 +156,7 @@ const Register = (props) => {
           danger
           full
           style={styles.button}
-          onPress={() => props.navigation.navigate('Main')}>
+          onPress={() => navigation.navigate('Main')}>
           <Text style={styles.buttonCancel}>Cancelar</Text>
         </Button>
       </Content>

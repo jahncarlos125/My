@@ -1,8 +1,8 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
+import Theme from './theme';
 
 import '~/config/ReactotronConfig';
 
@@ -13,9 +13,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <StatusBar backgroundColor="#4C3C82" />
         <NavigationContainer>
-          <Routes />
+          <Theme>
+            <Routes />
+          </Theme>
         </NavigationContainer>
       </PersistGate>
     </Provider>
